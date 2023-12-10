@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+
+div {
+    height: 3.566rem;
+    display: flex;
+    width: 100%;
+}
