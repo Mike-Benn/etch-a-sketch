@@ -1,24 +1,47 @@
-const pageContainer = document.createElement('div');
-pageContainer.classList.add('page-container');
-pageContainer.setAttribute('draggable' , 'false');
-document.body.appendChild(pageContainer);
+const grid = document.querySelector('.grid');
+const slider = document.querySelector('#size-slider');
+const sizeValue = document.querySelectorAll('.grid-size');
+const singleSizeValue = document.querySelector('.grid-size');
 
-for (let heightIndex = 0; heightIndex < 24; heightIndex++) {
-    let container = document.createElement('div');
-    container.classList.add('grid');
-    container.setAttribute('draggable' , 'false');
-    for(let widthIndex = 0; widthIndex < 24; widthIndex++) {
-        let div = document.createElement('div');
-        div.classList.add('square');
-        div.setAttribute('draggable' , 'false');
-        container.appendChild(div);
-        if (widthIndex == 15) {
-            pageContainer.appendChild(container);
+// Function that pulls grid size value from slider and loops until dimension value is reached 
+
+function makeGrid() {
+    dimensionIndex = parseInt(singleSizeValue.textContent);
+    for (let heightIndex = 0; heightIndex < dimensionIndex; heightIndex++) {
+        let container = document.createElement('div');
+        container.classList.add('grid-row');
+        container.setAttribute('draggable' , 'false');
+        for (let widthIndex = 0; widthIndex < dimensionIndex; widthIndex++) {
+            let div = document.createElement('div');
+            div.classList.add('square');
+            div.setAttribute('draggable' , 'false');
+            container.setAttribute('draggable' , 'false');
+            container.appendChild(div);
+            if (widthIndex == dimensionIndex - 1) {
+                grid.appendChild(container);
+            }
         }
-
     }
-
 }
+
+makeGrid();
+
+slider.addEventListener('input' , () => {
+    sizeValue.forEach(value => {
+        value.textContent = slider.value;
+    })
+})
+
+
+
+slider.addEventListener('change' , () => {
+    while (grid.firstChild) {
+        grid.firstChild.remove();
+    }
+    makeGrid();
+})
+
+
 
 const squares = document.querySelectorAll('.square');
 let mouseDown = false;
@@ -66,31 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-/*
-squares.forEach(square => {
-    square.addEventListener('mousedown' , () => {
-        square.addEventListener('mousehover' , () => {
-            square.style.backgroundColor = "black";
-        })
-        square.addEventListener('mouseup' , () => {
-            square.removeEventListener('mousehover')
-        })
-    })
-})
-
-squares.forEach(square => {
-    square.addEventListener('mousedown' , continuousFire)
-    
-});
-
-
-squares.forEach(square => {
-    square.addEventListener('mouseup' , () => {
-        mouseDown = false;
-        console.log("mouse up");
-    })
-})
-*/
 
 
 
