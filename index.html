@@ -8,6 +8,19 @@
     <script src="../etch-a-sketch/scripts.js" defer></script>
 </head>
 <body>
+    <header>
+        <h1>Etch A Sketch</h1>
+    </header>
+
+    <div class="page-container" draggable="false">
+        <div class="grid-controls">
+            <div class="slider-container">
+                <input type="range" id="size-slider" min="1" max="32" value="16">
+                <h6>Grid size: <span class="grid-size">16</span> x <span class="grid-size">16</span></h6>
+            </div>
+        </div>
+        <div class="grid"></div>
+    </div>
 
     
 </body>
