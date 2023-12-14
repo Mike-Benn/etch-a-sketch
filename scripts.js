@@ -1,7 +1,14 @@
+
 const grid = document.querySelector('.grid');
 const slider = document.querySelector('#size-slider');
 const sizeValue = document.querySelectorAll('.grid-size');
 const singleSizeValue = document.querySelector('.grid-size');
+let squares = document.querySelectorAll('.square');
+let mouseDown = false;
+makeGrid();
+
+
+
 
 
 // Function that pulls grid size value from slider and loops until dimension value is reached 
@@ -23,11 +30,10 @@ function makeGrid() {
             }
         }
     }
-}
+    squares = document.querySelectorAll('.square');
+    draw();
 
-makeGrid();
-replaceGrid();
-displayDimension();
+}
 
 // All child nodes of grid are deleted, afterward a new grid is created from the value set from the dimension slider
 
@@ -37,8 +43,13 @@ function replaceGrid() {
             grid.firstChild.remove();
         }
         makeGrid();
+        squares = document.querySelectorAll('.square');
+        draw();
+        
     })
 }
+
+replaceGrid();
 
 // Gets value from the slider and sets the heading under the slider to display the dimensions in the grid-size span
 
@@ -51,19 +62,26 @@ function displayDimension() {
     })
 }
 
+displayDimension();
+
+// Loops through each square removing every mouseenter event listener when mouseup
 
 
-const squares = document.querySelectorAll('.square');
-let mouseDown = false;
-document.body.addEventListener('mouseup' , toggleMouse);
-function toggleMouse() {
-    mouseDown = false;
+
+function toggleMouse() {    
     console.log("mouse up");
     squares.forEach(square => {
         square.removeEventListener('mouseenter' , blackSquare);
         console.log("squares removed");
     })
 }
+
+function removeMouseEnter() {
+    document.body.addEventListener('mouseup' , toggleMouse);
+
+}
+
+removeMouseEnter();
 
 // Sets event target to the background color of black
 
@@ -72,20 +90,29 @@ function blackSquare(event) {
 
 }
 
+// Whenever mouse button is pushed down the background color of the current target is set to black
+
+function drawStart() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , blackSquare);
+    })
+}
 
 
-squares.forEach(square => {
-    square.addEventListener('mousedown' , blackSquare);
-})
 
-squares.forEach(square => {
-    square.addEventListener('mousedown' , () => {
-        mouseDown = true;
-        squares.forEach(square => {
-            square.addEventListener('mouseenter' , blackSquare);
+function draw() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , () => {
+            mouseDown = true;
+            squares.forEach(square => {
+                square.addEventListener('mouseenter' , blackSquare);
+            })
         })
     })
-})
+    drawStart();
+}
+
+
 
 squares.forEach(square => {
     square.addEventListener('mouseup' , toggleMouse)})
