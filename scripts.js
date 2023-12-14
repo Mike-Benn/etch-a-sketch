@@ -3,8 +3,11 @@ const grid = document.querySelector('.grid');
 const slider = document.querySelector('#size-slider');
 const sizeValue = document.querySelectorAll('.grid-size');
 const singleSizeValue = document.querySelector('.grid-size');
+const clearBtn = document.querySelector('#clear');
+const gridLinesBtn = document.querySelector('#grid-lines');
 let squares = document.querySelectorAll('.square');
 let mouseDown = false;
+let gridLines = true;
 makeGrid();
 
 
@@ -114,10 +117,39 @@ function removeMouseEnter() {
 
 removeMouseEnter();
 
+// Toggles grid lines on and off
 
+function toggleGridLines() {
+    gridLinesBtn.addEventListener('click' , () => {
+        console.log("test");
+        if (gridLines) {
+            gridLines = false;
+            squares.forEach(square => {
+                square.style.border = "none";
+            })
+        } else {
+            gridLines = true;
+            squares.forEach(square => {
+                square.style.border = "1px solid gray";
+            })
+        }
+    
+        
+    })
+}
 
+toggleGridLines();
+// Sets all squares to the current background color
 
+function clearGrid() {
+    clearBtn.addEventListener('click' , () => {
+        squares.forEach(square => {
+            square.style.backgroundColor = "white";
+        })
+    })    
+}
 
+clearGrid();
 
 document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('dragstart', function(e) {
