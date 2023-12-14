@@ -3,6 +3,7 @@ const slider = document.querySelector('#size-slider');
 const sizeValue = document.querySelectorAll('.grid-size');
 const singleSizeValue = document.querySelector('.grid-size');
 
+
 // Function that pulls grid size value from slider and loops until dimension value is reached 
 
 function makeGrid() {
