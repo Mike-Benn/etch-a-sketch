@@ -1,5 +1,11 @@
 * {
-    background-color: #ececec;
+    background-color: #142d4c;
+    font-size: 14px;
+    
+}
+
+h1 {
+    font-size: 34px;
 }
 
 
@@ -19,17 +25,18 @@ header {
 .grid-controls {
     height: 600px;
     width: 200px;
-    border: solid black 2px;
     margin-top: 50px;
-    background-color: #9fd3c7;
+    background-color: #385170;
     padding: 30px;
+    border-radius: 2px;
+    margin-left: 25px;
 }
 
 .color-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #9fd3c7;
+    background-color: #385170;
     flex-direction: column;
     width: 100%;
     margin-bottom: 25px;
@@ -39,48 +46,93 @@ header {
     display: flex;
     justify-content: left;
     align-items: center;
-    background-color: #9fd3c7;
+    background-color: #385170;
     width: 100%;
+    overflow: hidden;
+    
+}
+
+.forecolor-container {
+    margin-bottom: 10px;
+}
+
+.fillpick-container , .pen-modifier-container , .grid-modifier-container {
+    background-color: #385170;
+    margin-bottom: 34px;
 }
 
 input , label {
-    background-color: #9fd3c7;
+    background-color: #385170;
     border: none;
+    color: #9fd3c7;
+}
+
+label[for=color] {
+    font-family: roboto;
+    font-weight: 500;
+}
+
+.color-box {
+    height: 30px;
+    width: 30%;
+    overflow: hidden;
+    border: 1px solid #9fd3c7;
+    margin-right: 15px;
+}
+#forecolor , #backcolor {
+    padding: 0px;
+    width: 200%;
+    height: 200%;
+    transform: translateX(-9px) translateY(-9px);
+    
 }
 
 button {
     display: block;
     width: 100%;
+    height: 36px;
+    border: none;
+    border-radius: 2px;
+    border: 1px solid #9fd3c7;
+    color: #9fd3c7;
+    background-color: #385170;
     
 }
 
-#fill-button {
+#fill-button , #eraser , #prismatic , #shading {
     margin-bottom: 10px;
+}
+
+#grid-lines {
+    margin-bottom: 30px;
 }
 
 .slider {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color: #9fd3c7;
+    background-color: #385170;
 }
 
 h6 {
     margin: 0;
     text-align: center;
     padding-top: 5px;
-    background-color: #9fd3c7;
+    background-color: #385170;
+    margin-bottom: 34px;
+    color: #9fd3c7;
 }
 
 .grid {
     display: flex;
     height: 600px;
     width: 600px;
-    border: solid black 2px;
     margin-top: 50px;
     flex-direction: column;
-    background-color: #9fd3c7;
+    background-color: #385170;
     padding: 30px;
+    border-radius: 2px;
+    margin-right: 25px;
 
 }
 
@@ -98,5 +150,5 @@ h6 {
 }
 
 .grid-size {
-    background-color: #9fd3c7;
+    background-color: #385170;
 }
