@@ -1,11 +1,13 @@
 * {
     background-color: #142d4c;
     font-size: 14px;
+    font-family: Tahoma;
     
 }
 
 h1 {
     font-size: 34px;
+    color: #9fd3c7;
 }
 
 
@@ -67,9 +69,10 @@ input , label {
     color: #9fd3c7;
 }
 
-label[for=color] {
-    font-family: roboto;
+.color {
     font-weight: 500;
+    background-color: #385170;
+    color: #9fd3c7;
 }
 
 .color-box {
