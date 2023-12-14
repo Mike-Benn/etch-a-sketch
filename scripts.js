@@ -133,8 +133,7 @@ function toggleGridLines() {
                 square.style.border = "1px solid gray";
             })
         }
-    
-        
+
     })
 }
 
