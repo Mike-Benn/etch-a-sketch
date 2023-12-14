@@ -66,8 +66,6 @@ displayDimension();
 
 // Loops through each square removing every mouseenter event listener when mouseup
 
-
-
 function toggleMouse() {    
     console.log("mouse up");
     squares.forEach(square => {
@@ -75,13 +73,6 @@ function toggleMouse() {
         console.log("squares removed");
     })
 }
-
-function removeMouseEnter() {
-    document.body.addEventListener('mouseup' , toggleMouse);
-
-}
-
-removeMouseEnter();
 
 // Sets event target to the background color of black
 
@@ -98,7 +89,7 @@ function drawStart() {
     })
 }
 
-
+// Sets the background color of squares to black when the mouse is pressed down and then enters other squares
 
 function draw() {
     squares.forEach(square => {
@@ -112,10 +103,18 @@ function draw() {
     drawStart();
 }
 
+// Removes mouseenter listener when mouseup on either the body or a square
+
+function removeMouseEnter() {
+    document.body.addEventListener('mouseup' , toggleMouse);
+    squares.forEach(square => {
+        square.addEventListener('mouseup' , toggleMouse)})
+
+}
+
+removeMouseEnter();
 
 
-squares.forEach(square => {
-    square.addEventListener('mouseup' , toggleMouse)})
 
 
 
