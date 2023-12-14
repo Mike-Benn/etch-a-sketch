@@ -102,7 +102,7 @@ button {
     
 }
 
-#fill-button , #eraser , #prismatic , #shading {
+#fill-button , #eraser , #prismatic , #darken {
     margin-bottom: 10px;
 }
 
@@ -155,3 +155,4 @@ h6 {
 .grid-size {
     background-color: #385170;
 }
+
