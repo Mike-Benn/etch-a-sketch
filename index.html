@@ -14,7 +14,19 @@
 
     <div class="page-container" draggable="false">
         <div class="grid-controls">
-            <div class="slider-container">
+            <div class="color-controls">
+                <div class="forecolor-container">
+                    <input type="color" name="forecolor" id="forecolor" value="#000000">
+                    <label for="forecolor">Pen Color</label>
+                </div>
+                <div class="backcolor-container">
+                    <input type="color" name="backcolor" id="backcolor" value="#FFFFFF">
+                    <label for="backcolor">Background Color</label>
+                </div>
+            </div>
+            <button id="fill-button">Color Fill</button>
+            <button id="picker-button">Color Picker</button>
+            <div class="slider">
                 <input type="range" id="size-slider" min="1" max="32" value="16">
                 <h6>Grid size: <span class="grid-size">16</span> x <span class="grid-size">16</span></h6>
             </div>
