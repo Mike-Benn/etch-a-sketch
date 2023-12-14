@@ -7,7 +7,7 @@ const singleSizeValue = document.querySelector('.grid-size');
 // Function that pulls grid size value from slider and loops until dimension value is reached 
 
 function makeGrid() {
-    dimensionIndex = parseInt(singleSizeValue.textContent);
+    dimensionIndex = slider.value;
     for (let heightIndex = 0; heightIndex < dimensionIndex; heightIndex++) {
         let container = document.createElement('div');
         container.classList.add('grid-row');
@@ -26,21 +26,30 @@ function makeGrid() {
 }
 
 makeGrid();
+replaceGrid();
+displayDimension();
 
-slider.addEventListener('input' , () => {
-    sizeValue.forEach(value => {
-        value.textContent = slider.value;
+// All child nodes of grid are deleted, afterward a new grid is created from the value set from the dimension slider
+
+function replaceGrid() {
+    slider.addEventListener('change' , () => {
+        while (grid.firstChild) {
+            grid.firstChild.remove();
+        }
+        makeGrid();
     })
-})
+}
 
+// Gets value from the slider and sets the heading under the slider to display the dimensions in the grid-size span
 
-
-slider.addEventListener('change' , () => {
-    while (grid.firstChild) {
-        grid.firstChild.remove();
-    }
-    makeGrid();
-})
+function displayDimension() {
+    slider.addEventListener('input' , () => {
+        sizeValue.forEach(value => {
+            value.textContent = slider.value;
+            console.log(slider.value);
+        })
+    })
+}
 
 
 
@@ -55,6 +64,8 @@ function toggleMouse() {
         console.log("squares removed");
     })
 }
+
+// Sets event target to the background color of black
 
 function blackSquare(event) {
     event.target.style.backgroundColor = "black";
