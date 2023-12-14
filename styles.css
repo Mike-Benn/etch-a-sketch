@@ -1,3 +1,8 @@
+* {
+    background-color: #ececec;
+}
+
+
 header {
     display: flex;
     width: 100%;
@@ -16,18 +21,55 @@ header {
     width: 200px;
     border: solid black 2px;
     margin-top: 50px;
+    background-color: #9fd3c7;
+    padding: 30px;
 }
 
-.slider-container {
+.color-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9fd3c7;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.backcolor-container , .forecolor-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: #9fd3c7;
+    width: 100%;
+}
+
+input , label {
+    background-color: #9fd3c7;
+    border: none;
+}
+
+button {
+    display: block;
+    width: 100%;
+    
+}
+
+#fill-button {
+    margin-bottom: 10px;
+}
+
+.slider {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #9fd3c7;
 }
 
 h6 {
     margin: 0;
     text-align: center;
     padding-top: 5px;
+    background-color: #9fd3c7;
 }
 
 .grid {
@@ -37,7 +79,9 @@ h6 {
     border: solid black 2px;
     margin-top: 50px;
     flex-direction: column;
-    background-color: white;
+    background-color: #9fd3c7;
+    padding: 30px;
+
 }
 
 .grid-row {
@@ -49,5 +93,10 @@ h6 {
 .square {
     flex: 1;
     border: solid gray 1px;
+    background-color: white;
     
+}
+
+.grid-size {
+    background-color: #9fd3c7;
 }
