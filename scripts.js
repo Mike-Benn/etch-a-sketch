@@ -19,6 +19,7 @@ let mouseDown = false;
 // Button status variables
 
 let gridLines = true;
+let penSelected = true;
 let fillSelected = false;
 let pickerSelected = false;
 let eraserSelected = false;
@@ -26,10 +27,30 @@ let prismaticSelected = false;
 let darkenSelected = false;
 let brightenSelected = false;
 
+function stringToRGB(str) {
+    startingIndex = str.indexOf("(") + 1;
+    finishingIndex = str.lastIndexOf(")");
+    str = str.substring(startingIndex , finishingIndex);
+    strArray = str.split(",");
+    return strArray;
+}
+
+function rgbToHex(r,g,b) {
+    r = r.toString(16);
+    g = g.toString(16);
+    b = b.toString(16);
+  
+    if (r.length == 1)
+      r = "0" + r;
+    if (g.length == 1)
+      g = "0" + g;
+    if (b.length == 1)
+      b = "0" + b;
+  
+    return "#" + r + g + b;
+}
+
 makeGrid();
-
-
-
 
 
 // Function that pulls grid size value from slider and loops until dimension value is reached 
@@ -53,6 +74,9 @@ function makeGrid() {
     }
     squares = document.querySelectorAll('.square');
     draw();
+    
+    
+    
 
 }
 
@@ -65,7 +89,7 @@ function replaceGrid() {
         }
         makeGrid();
         squares = document.querySelectorAll('.square');
-        draw();
+        
         
     })
 }
@@ -85,55 +109,98 @@ function displayDimension() {
 
 displayDimension();
 
-// Loops through each square removing every mouseenter event listener when mouseup
 
-function toggleMouse() {    
-    console.log("mouse up");
-    squares.forEach(square => {
-        square.removeEventListener('mouseenter' , blackSquare);
-        console.log("squares removed");
-    })
-}
+// Sets event target to the value of "Pen Color"
 
-// Sets event target to the background color of black
-
-function blackSquare(event) {
+function setForeColor(event) {
     event.target.style.backgroundColor = foregroundColor.value;
 
 }
 
-// Whenever mouse button is pushed down the background color of the current target is set to black
+// Sets event target to the value of "Background Color"
 
-function drawStart() {
+function setBackColor(event) {
+    event.target.style.backgroundColor = backgroundColor.value;
+}
+
+function setBackColorDrag() {
     squares.forEach(square => {
-        square.addEventListener('mousedown' , blackSquare);
+        square.addEventListener('mouseenter' , toggleEraserDrag)
     })
 }
 
-// Sets the background color of squares to black when the mouse is pressed down and then enters other squares
+// Loops through each square removing every mouseenter event listener when mouseup
 
-function draw() {
+function togglePenDrag() {    
+    console.log("mouse up");
     squares.forEach(square => {
-        square.addEventListener('mousedown' , () => {
-            mouseDown = true;
-            squares.forEach(square => {
-                square.addEventListener('mouseenter' , blackSquare);
-            })
-        })
+        square.removeEventListener('mouseenter' , setForeColor);
+        console.log("squares removed");
     })
-    drawStart();
 }
 
-// Removes mouseenter listener when mouseup on either the body or a square
 
-function removeMouseEnter() {
-    document.body.addEventListener('mouseup' , toggleMouse);
+
+
+
+
+
+// Pen listener removers
+
+function removePenEnter() {
+    document.body.addEventListener('mouseup' , togglePenDrag);
     squares.forEach(square => {
-        square.addEventListener('mouseup' , toggleMouse)})
+        square.addEventListener('mouseup' , togglePenDrag);
+    })
 
 }
 
-removeMouseEnter();
+function removePen() {
+    penSelected = false;
+    squares.forEach(square => {
+        square.removeEventListener('mouseenter' , setForeColor);
+        square.removeEventListener('mousedown' , drawHelper);
+        square.removeEventListener('mousedown' , setForeColor);
+        square.removeEventListener('mouseup' , togglePenDrag);
+    })
+    document.body.removeEventListener('mouseup' , togglePenDrag)
+}
+
+
+
+
+// Eraser listener removers
+
+function removeEraseEnter() {
+    document.body.addEventListener('mouseup' , toggleEraserDrag);
+    squares.forEach(square => {
+        square.addEventListener('mouseup' , toggleEraserDrag);
+    })
+}
+
+function toggleEraserDrag() {
+    squares.forEach(square => {
+        square.removeEventListener('mouseenter' , setBackColor);
+    })
+}
+
+function removeEraser() {
+    eraserSelected = false;
+    squares.forEach(square => {
+        square.removeEventListener('mouseenter' , setBackColor);
+        square.removeEventListener('mousedown' , drawEraseHelper);
+        square.removeEventListener('mousedown' , setBackColor);
+        square.removeEventListener('mouseup' , toggleEraserDrag);
+    })
+    document.body.removeEventListener('mouseup' , toggleEraserDrag);
+}
+
+// Remove fill functions
+
+function removeFill() {
+    fillSelected = false;
+    grid.removeEventListener('mousedown' , fillGridHelper);
+}
 
 // Selects or deslects the color fill tool
 
@@ -143,10 +210,17 @@ function fillToggle() {
             fillSelected = false;
             fillBtn.style.color = "#9fd3c7";
             fillBtn.style.backgroundColor = "#385170";
+            removeFill();
+            draw();
+            
         } else {
             fillSelected = true;
             fillBtn.style.color = "#385170";
             fillBtn.style.backgroundColor = "#9fd3c7";
+            removePen();
+            removeEraser();
+            fillGrid();
+
         }
     })
 }
@@ -161,11 +235,15 @@ function colorPickerToggle() {
             pickerSelected = false;
             pickBtn.style.color = "#9fd3c7";
             pickBtn.style.backgroundColor = "#385170";
+
         } else {
             pickerSelected = true;
             pickBtn.style.color = "#385170";
             pickBtn.style.backgroundColor = "#9fd3c7";
-            
+            removePen();
+            removeEraser();
+            removeFill();
+            colorPicker();
         }
     })
 }
@@ -180,10 +258,20 @@ function eraserToggle() {
             eraserSelected = false;
             eraserBtn.style.color = "#9fd3c7";
             eraserBtn.style.backgroundColor = "#385170";
+            removeEraser();
+            draw();
+
         } else {
             eraserSelected = true;
             eraserBtn.style.color = "#385170";
             eraserBtn.style.backgroundColor = "#9fd3c7";
+            removePen();
+            removeFill();
+            drawErase();
+            console.log("poop");
+            
+            
+            
         }
     })
     
@@ -287,7 +375,79 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Whenever mouse button is pushed down the background color of the current target is set to black
 
+function drawStart() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , setForeColor);
+    })
+}
 
+function drawHelper() {
+    squares.forEach(square => {
+        square.addEventListener('mouseenter' , setForeColor);
+    })
+}
 
+function draw() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , drawHelper);
+    })
 
+    drawStart();
+    removePenEnter();
+}
+
+// Sets the color of square elements to the selected background color
+
+function drawEraseStart() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , setBackColor);
+    })
+}
+
+function drawEraseHelper() {
+    squares.forEach(square => {
+        square.addEventListener('mouseenter' , setBackColor);
+    })
+}
+function drawErase() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , drawEraseHelper);
+    })
+    drawEraseStart();
+    removeEraseEnter();
+}
+        
+// Color fill functions
+
+function fillGridHelper() {
+    squares.forEach(square => {
+        square.style.backgroundColor = foregroundColor.value;
+    })
+}
+
+function fillGrid() {
+    if (fillSelected) {
+        grid.addEventListener('mousedown' , fillGridHelper); 
+    }
+        
+}
+
+// Color picker functions
+
+function colorPickerHelper(event) {
+    rgbValue = stringToRGB(event.target.style.backgroundColor);
+    r = parseInt(rgbValue[0]);
+    g = parseInt(rgbValue[1]);
+    b = parseInt(rgbValue[2]);
+    foregroundColor.value = rgbToHex(r , g , b);
+}
+
+function colorPicker() {
+    if (pickerSelected) {
+        squares.forEach(square => {
+            square.addEventListener('mousedown' , colorPickerHelper) 
+        })
+    }
+}
