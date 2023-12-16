@@ -163,7 +163,7 @@ function removePen() {
         square.removeEventListener('mousedown' , setForeColor);
         square.removeEventListener('mouseup' , togglePenDrag);
     })
-    document.body.removeEventListener('mouseup' , togglePenDrag)
+    document.body.removeEventListener('mouseup' , togglePenDrag);
 }
 
 
@@ -202,6 +202,26 @@ function removeFill() {
     grid.removeEventListener('mousedown' , fillGridHelper);
 }
 
+// Remove color picker functions
+
+function removePicker() {
+    pickerSelected = false;
+    squares.forEach(square => {
+        square.removeEventListener('mousedown' , colorPickerHelper);
+    })
+}
+
+// Remove prismatic functions
+
+// Remove darken square listeners
+
+function removeDarken() {
+    squares.forEach(square => {
+        square.removeEventListener('mousedown' , darkenSquareHelper);
+    })
+}
+
+
 // Selects or deslects the color fill tool
 
 function fillToggle() {
@@ -235,6 +255,8 @@ function colorPickerToggle() {
             pickerSelected = false;
             pickBtn.style.color = "#9fd3c7";
             pickBtn.style.backgroundColor = "#385170";
+            removePicker();
+            draw();
 
         } else {
             pickerSelected = true;
@@ -305,10 +327,17 @@ function darkenToggle() {
             darkenSelected = false;
             darkenBtn.style.color = "#9fd3c7";
             darkenBtn.style.backgroundColor = "#385170";
+            removeDarken();
+            draw();
         } else {
             darkenSelected = true;
             darkenBtn.style.color = "#385170";
             darkenBtn.style.backgroundColor = "#9fd3c7";
+            removePen();
+            removeEraser();
+            removeFill();
+            removePicker();
+            darkenSquare();
         }
     })
 }
@@ -451,3 +480,40 @@ function colorPicker() {
         })
     }
 }
+
+function darkenSquareHelper(event) {
+    rgbValue = stringToRGB(event.target.style.backgroundColor);
+    r = parseInt(rgbValue[0]);
+    g = parseInt(rgbValue[1]);
+    b = parseInt(rgbValue[2]);
+
+    if (r - 26 < 0) {
+        r = 0;
+    } else {
+        r = r - 26;
+    }
+
+    if (g - 26 < 0) {
+        g = 0;
+    } else {
+        g = g - 26;
+    }
+
+    if (b - 26 < 0) {
+        b = 0;
+    } else {
+        b = b - 26;
+    }
+
+    event.target.style.backgroundColor = rgbToHex(r , g , b);
+
+}
+
+function darkenSquare() {
+    if (darkenSelected) {
+        squares.forEach(square => {
+            square.addEventListener('mousedown' , darkenSquareHelper);
+        })
+    }
+}
+
