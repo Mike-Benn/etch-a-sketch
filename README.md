@@ -19,7 +19,7 @@ An obvious optimization that I'd look at implementing within this app is the abi
 
 I greatly increased my understanding of event listeners after this project.  Figuring out how to manage selecting utensils and making sure that no more than one utensil is selected at a time was an invaluable experience.  With this being the largest amount of code I've written for a single project, I think I also learned a lot about ways to keep track of what I have and what still needs to be implemented.  There were pain points at times where I had to track down one line of code that was being used in a trail of functions incorrectly.  Obviously this is going to be a common occurrence but it felt like if I was better organized in my approach that I wouldn't have even encountered these roadblocks.    
 
-
+## Example:
 
 
 
