@@ -4,6 +4,7 @@ const grid = document.querySelector('.grid');
 const slider = document.querySelector('#size-slider');
 const sizeValue = document.querySelectorAll('.grid-size');
 const singleSizeValue = document.querySelector('.grid-size');
+const penBtn = document.querySelector('#pen');
 const fillBtn = document.querySelector('#fill-button');
 const pickBtn = document.querySelector('#picker-button');
 const clearBtn = document.querySelector('#clear');
@@ -21,7 +22,7 @@ let squares = document.querySelectorAll('.square');
 // Button status variables
 
 let gridLines = true;
-let penSelected = true;
+let penSelected = false;
 let fillSelected = false;
 let pickerSelected = false;
 let eraserSelected = false;
@@ -106,7 +107,7 @@ function makeGrid() {
         })    
     
     }
-    draw();
+    
     
 }
 
@@ -313,6 +314,8 @@ function removeBrighten() {
 
 function deselectButtons() {
     if (penSelected) {
+        penBtn.style.color = "#9fd3c7";
+        penBtn.style.backgroundColor = "#385170";
         removePen();
 
     } else if (eraserSelected) {
@@ -359,13 +362,30 @@ function deselectButtons() {
 
 // Selects or deselects a utensil by: updating the utensil's status, deselecting all buttons, then triggers either the pen utensil or the current utensil being toggled.
 
+function penToggle () {
+    penBtn.addEventListener('click' , () => {
+        if (penSelected) {
+            penBtn.style.color = "#9fd3c7";
+            penBtn.style.backgroundColor = "#385170";
+            removePen();
+
+        } else {
+            penBtn.style.color = "#385170";
+            penBtn.style.backgroundColor = "#9fd3c7";
+            deselectButtons();
+            penSelected = true;
+            draw();
+
+        }
+    })
+}
+
 function fillToggle() {
     fillBtn.addEventListener('click' , () => {
         if (fillSelected) {
             fillBtn.style.color = "#9fd3c7";
             fillBtn.style.backgroundColor = "#385170";
             removeFill();
-            draw();
             
         } else {
             fillBtn.style.color = "#385170";
@@ -384,7 +404,6 @@ function colorPickerToggle() {
             pickBtn.style.color = "#9fd3c7";
             pickBtn.style.backgroundColor = "#385170";
             deselectButtons();
-            draw();
 
         } else {
             pickBtn.style.color = "#385170";
@@ -403,7 +422,6 @@ function eraserToggle() {
             eraserBtn.style.color = "#9fd3c7";
             eraserBtn.style.backgroundColor = "#385170";
             removeEraser();
-            draw();
             
         } else {
             eraserBtn.style.color = "#385170";
@@ -423,7 +441,6 @@ function prismaticToggle() {
             prismaticBtn.style.color = "#9fd3c7";
             prismaticBtn.style.backgroundColor = "#385170";
             removePrism();
-            draw();
 
         } else {
             prismaticBtn.style.color = "#385170";
@@ -442,7 +459,6 @@ function darkenToggle() {
             darkenBtn.style.color = "#9fd3c7";
             darkenBtn.style.backgroundColor = "#385170";
             removeDarken();
-            draw();
 
         } else {
             darkenBtn.style.color = "#385170";
@@ -461,7 +477,6 @@ function brightenToggle() {
             brightenBtn.style.color = "#9fd3c7";
             brightenBtn.style.backgroundColor = "#385170";
             removeBrighten();
-            draw();
 
         } else {
             brightenBtn.style.color = "#385170";
@@ -640,7 +655,7 @@ function colorPickerHelper(event) {
     b = parseInt(rgbValue[2]);
     foregroundColor.value = rgbToHex(r , g , b);
     deselectButtons();
-    draw();
+    
 
 }
 
@@ -823,6 +838,7 @@ document.addEventListener('DOMContentLoaded', function() {
     makeGrid();
     replaceGrid();
     displayDimension();
+    penToggle();
     fillToggle();
     colorPickerToggle();
     eraserToggle();
