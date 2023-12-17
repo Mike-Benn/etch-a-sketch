@@ -1,7 +1,7 @@
 # Sketchit
 Sketchit is a browser app that allows you to make your own pixel art.  Users will have access to multiple different utensils and options to create whatever art they feel inspired to.
 
-**Link to project:** 
+**Link to project:** https://mike-benn.github.io/sketchit-v2/
 
 ## How It's Made:
 
