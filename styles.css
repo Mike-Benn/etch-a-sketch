@@ -67,7 +67,7 @@ button , .color-box {
 
 .grid , .grid-controls {
     height: 600px;
-    margin-top: 50px;
+    margin-top: 10px;
 
 }
 
@@ -77,7 +77,9 @@ button , .color-box {
 }
 
 h1 {
-    font-size: 34px;
+    font-size: 75px;
+    font-family: 'Bungee Shade', Tahoma;
+    margin-top: 35px;
     
 }
 
