@@ -23,3 +23,4 @@ I greatly increased my understanding of event listeners after this project.  Fig
 
 
 
+![pixelExample](https://github.com/Mike-Benn/sketchit/assets/135486982/d47b9158-632b-4f77-9dff-6bff240973e1)
