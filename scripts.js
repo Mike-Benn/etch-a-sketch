@@ -50,8 +50,8 @@ function rgbToHex(r,g,b) {
     return "#" + r + g + b;
 }
 
-makeGrid();
-draw();
+
+
 
 // Function that pulls grid size value from slider and loops until dimension value is reached 
 
@@ -74,6 +74,7 @@ function makeGrid() {
         }
     }
     squares = document.querySelectorAll('.square');
+    draw();
     
     
     
@@ -85,19 +86,18 @@ function makeGrid() {
 
 function replaceGrid() {
     slider.addEventListener('change' , () => {
+        deselectButtons();
         while (grid.firstChild) {
             grid.firstChild.remove();
         }
         makeGrid();
-        deselectButtons();
-        draw();
         squares = document.querySelectorAll('.square');
         
         
     })
 }
 
-replaceGrid();
+
 
 // Gets value from the slider and sets the heading under the slider to display the dimensions in the grid-size span
 
@@ -110,20 +110,21 @@ function displayDimension() {
     })
 }
 
-displayDimension();
+
 
 
 // Sets event target to the value of "Pen Color"
 
 function setForeColor(event) {
     event.target.style.backgroundColor = foregroundColor.value;
-    console.log(foregroundColor.value);
+    console.log("Pen");
 
 }
 
 // Sets event target to the value of "Background Color"
 
 function setBackColor(event) {
+    console.log("Eraser");
     event.target.style.backgroundColor = backgroundColor.value;
 }
 
@@ -131,7 +132,7 @@ function setPrismColor(event) {
     r = Math.floor(Math.random() * 256);
     g = Math.floor(Math.random() * 256);
     b = Math.floor(Math.random() * 256);
-
+    console.log("Prism");
     event.target.style.backgroundColor = rgbToHex(r , g , b);
 }
 
@@ -313,7 +314,7 @@ function fillToggle() {
     })
 }
 
-fillToggle();
+
 
 // Selects or deselects the color picker tool
 
@@ -323,7 +324,7 @@ function colorPickerToggle() {
             pickerSelected = false;
             pickBtn.style.color = "#9fd3c7";
             pickBtn.style.backgroundColor = "#385170";
-            removePicker();
+            deselectButtons();
             draw();
 
         } else {
@@ -336,24 +337,25 @@ function colorPickerToggle() {
     })
 }
 
-colorPickerToggle();
+
 
 // Selects or deselects the eraser tool
 
 function eraserToggle() {
     eraserBtn.addEventListener('click' , () => {
         if (eraserSelected) {
-            eraserSelected = false;
             eraserBtn.style.color = "#9fd3c7";
             eraserBtn.style.backgroundColor = "#385170";
             removeEraser();
             draw();
+            
 
         } else {
             eraserBtn.style.color = "#385170";
             eraserBtn.style.backgroundColor = "#9fd3c7";
             deselectButtons();
             eraserSelected = true;
+            console.log(penSelected);
             drawErase();
             
             
@@ -363,7 +365,7 @@ function eraserToggle() {
     
 }
 
-eraserToggle();
+
 
 // Selects or deselects the prismatic tool
 
@@ -385,7 +387,7 @@ function prismaticToggle() {
     })
 }
 
-prismaticToggle();
+
 
 // Selects or deselects the darken tool
 
@@ -407,7 +409,7 @@ function darkenToggle() {
     })
 }
 
-darkenToggle();
+
 
 // Selects or deselects the brighten tool
 
@@ -429,13 +431,12 @@ function brightenToggle() {
     })
 }
 
-brightenToggle();
+
 
 // Toggles grid lines on and off
 
 function toggleGridLines() {
     gridLinesBtn.addEventListener('click' , () => {
-        console.log("test");
         if (gridLines) {
             gridLines = false;
             squares.forEach(square => {
@@ -451,7 +452,7 @@ function toggleGridLines() {
     })
 }
 
-toggleGridLines();
+
 
 // Sets all squares to the current background color
 
@@ -460,17 +461,11 @@ function clearGrid() {
         squares.forEach(square => {
             square.style.backgroundColor = backgroundColor.value;
         })
+        console.log("Clear");
     })    
 }
 
-clearGrid();
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.body.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-});
 
 
 // Whenever mouse button is pushed down the background color of the current target is set to black
@@ -488,6 +483,7 @@ function drawHelper() {
 }
 
 function draw() {
+    penSelected = true;
     squares.forEach(square => {
         square.addEventListener('mousedown' , drawHelper);
     })
@@ -523,6 +519,7 @@ function fillGridHelper() {
     squares.forEach(square => {
         square.style.backgroundColor = foregroundColor.value;
     })
+    console.log("fill");
 }
 
 function fillGrid() {
@@ -554,7 +551,6 @@ function colorPicker() {
 
 function darkenSquareHelper(event) {
     rgbValue = stringToRGB(event.target.style.backgroundColor);
-    console.log(event.target.style.backgroundColor);
     r = parseInt(rgbValue[0]);
     g = parseInt(rgbValue[1]);
     b = parseInt(rgbValue[2]);
@@ -576,7 +572,7 @@ function darkenSquareHelper(event) {
     } else {
         b = b - 26;
     }
-
+    console.log("Darken");
     event.target.style.backgroundColor = rgbToHex(r , g , b);
     
 
@@ -613,7 +609,7 @@ function brightenSquareHelper(event) {
     } else {
         b = b + 26;
     }
-
+    console.log("Brighten");
     event.target.style.backgroundColor = rgbToHex(r , g , b);
     
 
@@ -647,5 +643,23 @@ function drawPrism() {
 }
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    makeGrid();
+    replaceGrid();
+    displayDimension();
+    fillToggle();
+    colorPickerToggle();
+    eraserToggle();
+    prismaticToggle();
+    darkenToggle();
+    brightenToggle();
+    toggleGridLines();
+    clearGrid();
+    
 
+});
 
