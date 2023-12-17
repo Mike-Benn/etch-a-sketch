@@ -73,8 +73,15 @@ function makeGrid() {
             }
         }
     }
+    
     squares = document.querySelectorAll('.square');
+    if (gridLines == false) {
+        squares.forEach(square => {
+            square.style.border = "none";
+        })    
+    }
     draw();
+    
     
     
     
