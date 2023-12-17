@@ -49,7 +49,7 @@ h1 , input , label , .color , button , h6 {
 }
 
 .fillpick-container , .pen-modifier-container , .grid-modifier-container , h6 {
-    margin-bottom: 34px;
+    margin-bottom: 30px;
 
 }
 
@@ -95,6 +95,7 @@ header , .color-controls , .slider {
 .page-container {
     height: 700px;
     justify-content: space-around;
+    margin-bottom: 50px;
 
 }
 
@@ -140,17 +141,17 @@ input , label {
 
 button {
     display: block;
-    height: 36px;
+    height: 33.5px;
     
 }
 
-#fill-button , #eraser , #prismatic , #darken , .forecolor-container {
+#fill-button , #eraser , #prismatic , #darken , .forecolor-container , #pen {
     margin-bottom: 10px;
 
 }
 
 #grid-lines {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
 }
 
