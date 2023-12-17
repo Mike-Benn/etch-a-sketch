@@ -51,7 +51,7 @@ function rgbToHex(r,g,b) {
 }
 
 makeGrid();
-
+draw();
 
 // Function that pulls grid size value from slider and loops until dimension value is reached 
 
@@ -65,6 +65,7 @@ function makeGrid() {
             let div = document.createElement('div');
             div.classList.add('square');
             div.setAttribute('draggable' , 'false');
+            div.style.backgroundColor = "#ffffff"
             container.setAttribute('draggable' , 'false');
             container.appendChild(div);
             if (widthIndex == dimensionIndex - 1) {
@@ -73,7 +74,7 @@ function makeGrid() {
         }
     }
     squares = document.querySelectorAll('.square');
-    draw();
+    
     
     
     
@@ -88,6 +89,8 @@ function replaceGrid() {
             grid.firstChild.remove();
         }
         makeGrid();
+        deselectButtons();
+        draw();
         squares = document.querySelectorAll('.square');
         
         
@@ -114,6 +117,7 @@ displayDimension();
 
 function setForeColor(event) {
     event.target.style.backgroundColor = foregroundColor.value;
+    console.log(foregroundColor.value);
 
 }
 
@@ -123,19 +127,19 @@ function setBackColor(event) {
     event.target.style.backgroundColor = backgroundColor.value;
 }
 
-function setBackColorDrag() {
-    squares.forEach(square => {
-        square.addEventListener('mouseenter' , toggleEraserDrag)
-    })
+function setPrismColor(event) {
+    r = Math.floor(Math.random() * 256);
+    g = Math.floor(Math.random() * 256);
+    b = Math.floor(Math.random() * 256);
+
+    event.target.style.backgroundColor = rgbToHex(r , g , b);
 }
 
 // Loops through each square removing every mouseenter event listener when mouseup
 
 function togglePenDrag() {    
-    console.log("mouse up");
     squares.forEach(square => {
         square.removeEventListener('mouseenter' , setForeColor);
-        console.log("squares removed");
     })
 }
 
@@ -213,15 +217,80 @@ function removePicker() {
 
 // Remove prismatic functions
 
+function togglePrismDrag() {    
+    squares.forEach(square => {
+        square.removeEventListener('mouseenter' , setPrismColor);
+    })
+}
+
+function removePrismEnter() {
+    document.body.addEventListener('mouseup' , togglePrismDrag);
+    squares.forEach(square => {
+        square.addEventListener('mouseup' , togglePrismDrag);
+    })
+}
+
+function removePrism() {
+    prismaticSelected = false;
+    squares.forEach(square => {
+        square.removeEventListener('mouseenter' , setPrismColor);
+        square.removeEventListener('mousedown' , drawPrismHelper);
+        square.removeEventListener('mousedown' , setPrismColor);
+        square.removeEventListener('mouseup' , togglePrismDrag);
+    })
+    document.body.removeEventListener('mouseup' , togglePrismDrag);
+}
+
 // Remove darken square listeners
 
 function removeDarken() {
+    darkenSelected = false;
     squares.forEach(square => {
         square.removeEventListener('mousedown' , darkenSquareHelper);
     })
 }
 
+// Remove brighten square listeners
 
+function removeBrighten() {
+    brightenSelected = false;
+    squares.forEach(square => {
+        square.removeEventListener('mousedown' , brightenSquareHelper);
+    })
+}
+
+// Finds and removes the button currently selected and it's listeners
+
+function deselectButtons() {
+    if (penSelected) {
+        removePen();
+    } else if (eraserSelected) {
+        eraserBtn.style.color = "#9fd3c7";
+        eraserBtn.style.backgroundColor = "#385170";
+        removeEraser();
+    } else if (prismaticSelected) {
+        prismaticBtn.style.color = "#9fd3c7";
+        prismaticBtn.style.backgroundColor = "#385170";
+        removePrism();
+    } else if (fillSelected) {
+        fillBtn.style.color = "#9fd3c7";
+        fillBtn.style.backgroundColor = "#385170";
+        removeFill();
+    } else if (pickerSelected) {
+        pickBtn.style.color = "#9fd3c7";
+        pickBtn.style.backgroundColor = "#385170";
+        removePicker();
+    } else if (darkenSelected) {
+        darkenBtn.style.color = "#9fd3c7";
+        darkenBtn.style.backgroundColor = "#385170";
+        removeDarken();
+    } else if (brightenSelected) {
+        brightenBtn.style.color = "#9fd3c7";
+        brightenBtn.style.backgroundColor = "#385170";
+        removeBrighten();
+    }
+    
+}
 // Selects or deslects the color fill tool
 
 function fillToggle() {
@@ -234,11 +303,10 @@ function fillToggle() {
             draw();
             
         } else {
-            fillSelected = true;
             fillBtn.style.color = "#385170";
             fillBtn.style.backgroundColor = "#9fd3c7";
-            removePen();
-            removeEraser();
+            deselectButtons();
+            fillSelected = true;
             fillGrid();
 
         }
@@ -259,12 +327,10 @@ function colorPickerToggle() {
             draw();
 
         } else {
-            pickerSelected = true;
             pickBtn.style.color = "#385170";
             pickBtn.style.backgroundColor = "#9fd3c7";
-            removePen();
-            removeEraser();
-            removeFill();
+            deselectButtons();
+            pickerSelected = true;
             colorPicker();
         }
     })
@@ -284,13 +350,11 @@ function eraserToggle() {
             draw();
 
         } else {
-            eraserSelected = true;
             eraserBtn.style.color = "#385170";
             eraserBtn.style.backgroundColor = "#9fd3c7";
-            removePen();
-            removeFill();
+            deselectButtons();
+            eraserSelected = true;
             drawErase();
-            console.log("poop");
             
             
             
@@ -309,10 +373,14 @@ function prismaticToggle() {
             prismaticSelected = false;
             prismaticBtn.style.color = "#9fd3c7";
             prismaticBtn.style.backgroundColor = "#385170";
+            removePrism();
+            draw();
         } else {
-            prismaticSelected = true;
             prismaticBtn.style.color = "#385170";
             prismaticBtn.style.backgroundColor = "#9fd3c7";
+            deselectButtons();
+            prismaticSelected = true;
+            drawPrism();
         }
     })
 }
@@ -330,13 +398,10 @@ function darkenToggle() {
             removeDarken();
             draw();
         } else {
-            darkenSelected = true;
             darkenBtn.style.color = "#385170";
             darkenBtn.style.backgroundColor = "#9fd3c7";
-            removePen();
-            removeEraser();
-            removeFill();
-            removePicker();
+            deselectButtons();
+            darkenSelected = true;
             darkenSquare();
         }
     })
@@ -352,10 +417,14 @@ function brightenToggle() {
             brightenSelected = false;
             brightenBtn.style.color = "#9fd3c7";
             brightenBtn.style.backgroundColor = "#385170";
+            removeBrighten();
+            draw();
         } else {
-            brightenSelected = true;
             brightenBtn.style.color = "#385170";
             brightenBtn.style.backgroundColor = "#9fd3c7";
+            deselectButtons();
+            brightenSelected = true;
+            brightenSquare();
         }
     })
 }
@@ -471,6 +540,8 @@ function colorPickerHelper(event) {
     g = parseInt(rgbValue[1]);
     b = parseInt(rgbValue[2]);
     foregroundColor.value = rgbToHex(r , g , b);
+    deselectButtons();
+    draw();
 }
 
 function colorPicker() {
@@ -483,6 +554,7 @@ function colorPicker() {
 
 function darkenSquareHelper(event) {
     rgbValue = stringToRGB(event.target.style.backgroundColor);
+    console.log(event.target.style.backgroundColor);
     r = parseInt(rgbValue[0]);
     g = parseInt(rgbValue[1]);
     b = parseInt(rgbValue[2]);
@@ -506,6 +578,7 @@ function darkenSquareHelper(event) {
     }
 
     event.target.style.backgroundColor = rgbToHex(r , g , b);
+    
 
 }
 
@@ -516,4 +589,63 @@ function darkenSquare() {
         })
     }
 }
+
+function brightenSquareHelper(event) {
+    rgbValue = stringToRGB(event.target.style.backgroundColor);
+    r = parseInt(rgbValue[0]);
+    g = parseInt(rgbValue[1]);
+    b = parseInt(rgbValue[2]);
+
+    if (r + 26 > 255) {
+        r = 255;
+    } else {
+        r = r + 26;
+    }
+
+    if (g + 26 > 255) {
+        g = 255;
+    } else {
+        g = g + 26;
+    }
+
+    if (b + 26 > 255) {
+        b = 255;
+    } else {
+        b = b + 26;
+    }
+
+    event.target.style.backgroundColor = rgbToHex(r , g , b);
+    
+
+}
+
+function brightenSquare() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , brightenSquareHelper);
+    })
+}
+
+// Draw prism color
+
+function drawPrismStart() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , setPrismColor);
+    })
+}
+
+function drawPrismHelper() {
+    squares.forEach(square => {
+        square.addEventListener('mouseenter' , setPrismColor);
+    })
+}
+function drawPrism() {
+    squares.forEach(square => {
+        square.addEventListener('mousedown' , drawPrismHelper);
+    })
+    drawPrismStart();
+    removePrismEnter();
+}
+
+
+
 
