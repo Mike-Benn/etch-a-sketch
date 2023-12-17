@@ -5,82 +5,128 @@
     
 }
 
-h1 {
-    font-size: 34px;
-    color: #9fd3c7;
-}
-
-
-header {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-}
-
-.page-container {
-    display: flex;
-    height: 700px;
-    width: 100%;
-    justify-content: space-around;
-}
-
-.grid-controls {
-    height: 600px;
-    width: 200px;
-    margin-top: 50px;
-    background-color: #385170;
-    padding: 30px;
-    border-radius: 2px;
-    margin-left: 25px;
-}
-
-.color-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #385170;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 25px;
-}
-
-.backcolor-container , .forecolor-container {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    background-color: #385170;
-    width: 100%;
-    overflow: hidden;
+h6 {
+    margin: 0;
+    text-align: center;
+    padding-top: 5px;
     
 }
 
-.forecolor-container {
-    margin-bottom: 10px;
+.fillpick-container , .pen-modifier-container , .grid-modifier-container , h6 , .grid-controls , .color-controls , .backcolor-container , .forecolor-container , input , label ,
+.color , button , .slider , .grid , .grid-size {
+    background-color: #385170;
+
 }
 
-.fillpick-container , .pen-modifier-container , .grid-modifier-container {
-    background-color: #385170;
+header , .page-container , .color-controls , .backcolor-container , .forecolor-container , .slider , .grid , .grid-row {
+    display: flex;
+
+}
+
+.color-controls , .slider , .grid {
+    flex-direction: column;
+
+}
+
+.grid , .grid-controls , button {
+    border-radius: 2px;
+
+}
+
+.grid-row , .square {
+    flex: 1;
+
+}
+
+header , .page-container , .color-controls , .backcolor-container , .forecolor-container , button {
+    width: 100%;
+
+}
+
+h1 , input , label , .color , button , h6 {
+    color: #9fd3c7;
+
+}
+
+.fillpick-container , .pen-modifier-container , .grid-modifier-container , h6 {
     margin-bottom: 34px;
+
+}
+
+.backcolor-container , .forecolor-container , .color-box {
+    overflow: hidden;
+
+}
+
+button , .color-box {
+    border: 1px solid #9fd3c7;
+    
+}
+
+.grid , .grid-controls {
+    height: 600px;
+    margin-top: 50px;
+
+}
+
+.grid , .grid-controls {
+    padding: 30px;
+
+}
+
+h1 {
+    font-size: 34px;
+    
+}
+
+
+header , .color-controls , .slider {
+    justify-content: center;
+
+}
+
+.color-controls , .backcolor-container , .forecolor-container {
+    align-items: center;
+
+}
+
+.page-container {
+    height: 700px;
+    justify-content: space-around;
+
+}
+
+.grid-controls {
+    width: 200px;
+    margin-left: 25px;
+
+}
+
+.color-controls {
+    margin-bottom: 25px;
+
+}
+
+.backcolor-container , .forecolor-container {
+    justify-content: left;
+    
 }
 
 input , label {
-    background-color: #385170;
     border: none;
-    color: #9fd3c7;
+    
 }
 
 .color {
     font-weight: 500;
-    background-color: #385170;
-    color: #9fd3c7;
+    
 }
 
 .color-box {
     height: 30px;
     width: 30%;
-    overflow: hidden;
-    border: 1px solid #9fd3c7;
     margin-right: 15px;
+
 }
 #forecolor , #backcolor {
     padding: 0px;
@@ -92,67 +138,28 @@ input , label {
 
 button {
     display: block;
-    width: 100%;
     height: 36px;
-    border: none;
-    border-radius: 2px;
-    border: 1px solid #9fd3c7;
-    color: #9fd3c7;
-    background-color: #385170;
     
 }
 
-#fill-button , #eraser , #prismatic , #darken {
+#fill-button , #eraser , #prismatic , #darken , .forecolor-container {
     margin-bottom: 10px;
+
 }
 
 #grid-lines {
     margin-bottom: 30px;
-}
 
-.slider {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #385170;
-}
-
-h6 {
-    margin: 0;
-    text-align: center;
-    padding-top: 5px;
-    background-color: #385170;
-    margin-bottom: 34px;
-    color: #9fd3c7;
 }
 
 .grid {
-    display: flex;
-    height: 600px;
     width: 600px;
-    margin-top: 50px;
-    flex-direction: column;
-    background-color: #385170;
-    padding: 30px;
-    border-radius: 2px;
     margin-right: 25px;
 
 }
 
-.grid-row {
-    flex: 1;
-    display: flex;
-    
-}
-
 .square {
-    flex: 1;
     border: solid gray 1px;
     background-color: white;
     
 }
-
-.grid-size {
-    background-color: #385170;
-}
-
