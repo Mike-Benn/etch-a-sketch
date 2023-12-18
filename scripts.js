@@ -847,6 +847,9 @@ document.addEventListener('DOMContentLoaded', function() {
     brightenToggle();
     toggleGridLines();
     clearGrid();
+    penBtn.style.color = "#385170";
+    penBtn.style.backgroundColor = "#9fd3c7";
+    draw();
     
 
 });
